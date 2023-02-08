@@ -86,7 +86,7 @@ const main = async () => // main flow
     })
 
     await app.post("/add_attendee", (req, res) => {
-        console.log("yo " + JSON.stringify(req.body))
+        //console.log("yo " + JSON.stringify(req.body))
         const attendee_id = req.body.data
         res.send({
             status: "success!",

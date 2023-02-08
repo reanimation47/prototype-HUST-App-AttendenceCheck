@@ -27,14 +27,16 @@
 
 	// Forms.
 		// Block scrolling
-		document.querySelector('.scrolling-blocked').addEventListener('wheel', (e)=> {
-			e.preventDefault();
-    		e.stopPropagation();
+		// document.querySelector('.scrolling-blocked').addEventListener('wheel', (e)=> {
+		// 	e.preventDefault();
+    	// 	e.stopPropagation();
 
-    		return false;
-		},
-		{passive: false} // https://chromestatus.com/feature/6662647093133312
-		);
+    	// 	return false;
+		// },
+
+		
+		// {passive: false} // https://chromestatus.com/feature/6662647093133312
+		// );
 
 
 		// Hack: Activate non-input submits.

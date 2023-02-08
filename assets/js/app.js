@@ -56,8 +56,9 @@ video.addEventListener('play', async () => {
   let _id_data = await getData('get_id_table')
   studentId_to_studentName = _id_data.received
 
-  const canvas = faceapi.createCanvasFromMedia(video)
-  document.body.append(canvas)
+  //const canvas = faceapi.createCanvasFromMedia(video)
+  const canvas = document.getElementById('app-canvas')
+  //document.body.append(canvas)
   const displaySize = { width: video.width, height: video.height }
   let i = 0
   faceapi.matchDimensions(canvas, displaySize)
@@ -68,9 +69,9 @@ video.addEventListener('play', async () => {
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
 
-    faceapi.draw.drawDetections(canvas, resizedDetections)
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
+    //faceapi.draw.drawDetections(canvas, resizedDetections)
+    //faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+    //faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
     if (i < 100000000) {
       if (detections.length == 0) {return}
       const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
@@ -86,11 +87,18 @@ function drawRecognizedFaces(results, _canvas, detectedFaces){
         const current = new Date()
         //console.log(result._label + "/" + current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds())
         const box = detectedFaces[i].detection.box
+        const score = detectedFaces[i].detection.score
+        if (score <0.85)
+        {
+          return;
+        }
+        console.log(score)
         const drawBox = new faceapi.draw.DrawBox(box, { 
             //label: result.toString()
             label: studentId_to_studentName[Number(result._label)]
         })
         drawBox.draw(_canvas)
+        //console.log("drawww")
         await addAttendees(result._label) // add recognized attendees
       })
 }
