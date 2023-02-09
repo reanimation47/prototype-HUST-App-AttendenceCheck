@@ -50,6 +50,7 @@ canvas {
 
 #num-of-attendance {
 	top:6rem;
+	position: absolute;
 }
 
 .app-wrapper {
