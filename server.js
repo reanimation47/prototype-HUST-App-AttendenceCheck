@@ -69,8 +69,19 @@ const update_new_attendee = (new_id, ids) => {
         if (ids[i] == new_id)
         {
             sheetsapi.updateSingleRow(`C${i+1}`, "X")
+            update_attendee_arrival_time(i)
         }
     }
+}
+
+const update_attendee_arrival_time = (i) => {
+    const today = new Date();
+
+    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    sheetsapi.updateSingleRow(`D${i+1}`, date);
+    sheetsapi.updateSingleRow(`E${i+1}`, time);
 }
 
 

@@ -2,7 +2,7 @@ const video = document.getElementById('video')
 const num_of_attendence = document.getElementById('num-of-attendance')
 let attendeesList = {} //Array to store attendees
 let scan_frequency = 200 // in ms
-let confident_score_threshold =  0.85
+let confident_score_threshold =  0.7
 let studentId_to_studentName = {}
 let max_num_of_attendance = 0
 

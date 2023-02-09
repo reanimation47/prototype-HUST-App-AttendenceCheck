@@ -50,7 +50,12 @@ canvas {
 
 #num-of-attendance {
 	top:6rem;
-	position: absolute;
+	
+}
+
+.num-of-attendance {
+	align-items: baseline;
+	
 }
 
 .app-wrapper {
