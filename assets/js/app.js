@@ -1,7 +1,10 @@
 const video = document.getElementById('video')
+const num_of_attendence = document.getElementById('num-of-attendance')
 let attendeesList = {} //Array to store attendees
 let scan_frequency = 200 // in ms
+let confident_score_threshold =  0.85
 let studentId_to_studentName = {}
+let max_num_of_attendance = 0
 
 // const studentId_to_studentName = {
 //   20198323 : "Le Doan Anh Quan",
@@ -52,9 +55,11 @@ function startVideo() {
 video.addEventListener('play', async () => {
   let _labelsdata = await getData('get_student_ids')
   labels = _labelsdata.received
-  console.log("logging " +labels)
+  console.log("logging " +labels.length)
   let _id_data = await getData('get_id_table')
   studentId_to_studentName = _id_data.received
+
+  set_num_of_attendance(0, labels.length)
 
   //const canvas = faceapi.createCanvasFromMedia(video)
   const canvas = document.getElementById('app-canvas')
@@ -82,13 +87,19 @@ video.addEventListener('play', async () => {
   }, scan_frequency)
 })
 
+function set_num_of_attendance(current, max)
+{
+  max_num_of_attendance = max;
+  num_of_attendence.innerHTML = "Sĩ số: " + current + "/" + max;
+}
+
 function drawRecognizedFaces(results, _canvas, detectedFaces){
     results.forEach( async (result, i) => {
         const current = new Date()
         //console.log(result._label + "/" + current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds())
         const box = detectedFaces[i].detection.box
         const score = detectedFaces[i].detection.score
-        if (score <0.85)
+        if (score < confident_score_threshold) //
         {
           return;
         }
@@ -120,6 +131,8 @@ async function addAttendees(attendeeId) //add new attendees detected to the list
     console.log(Object.keys(attendeesList))
     const response = await postData('add_attendee', { data: attendeeId })
     //console.log(response)
+    
+    set_num_of_attendance(Object.keys(attendeesList).length, max_num_of_attendance)
     return studentId_to_studentName[attendeeId]
 }
 

@@ -48,12 +48,16 @@ canvas {
 	position: absolute;
 }
 
+#num-of-attendance {
+	top:6rem;
+}
+
 .app-wrapper {
 	height: 53vh;
 	width: auto;
 	bottom: -5rem;
-
 }
+
 
 ol, ul {
 	list-style: none;
